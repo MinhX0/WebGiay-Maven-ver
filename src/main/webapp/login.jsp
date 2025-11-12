@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -98,27 +99,10 @@
 
 <div class="login-card">
     <h2>ĐĂNG NHẬP</h2>
-    <%-- Hiển thị thông báo thành công từ RegisterServlet --%>
-    <% 
-        String success = (String) request.getAttribute("successMessage");
-        if(success != null) {
-            out.print("<p style='color: green; margin-bottom: 15px; font-weight: bold;'>" + success + "</p>");
-        }
-    %>
-    
-    <%-- Hiển thị thông báo lỗi từ LoginServlet --%>
-    <% 
-        String error = (String) request.getAttribute("errorMessage");
-        if(error != null) {
-            out.print("<p style='color: red; margin-bottom: 15px;'>" + error + "</p>");
-        }
-    %>
-
-    <%@ taglib prefix="s" uri="/struts-tags" %>
     <s:actionerror cssStyle="color:red; margin-bottom:15px;"/>
     <s:actionmessage cssStyle="color:green; margin-bottom:15px; font-weight:bold;"/>
-    <form action="<%= request.getContextPath() %>/login.action" method="POST">
-        
+    <form action="${pageContext.request.contextPath}/login" method="POST">
+
         <div class="form-group">
             <label for="username">Tên đăng nhập / Email</label>
             <input type="text" id="username" name="username" required>

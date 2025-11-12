@@ -1,6 +1,7 @@
 <%-- File: product_list.jsp (Trang Danh sách sản phẩm) --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -37,17 +38,17 @@
         <c:remove var="statusMessage" scope="session" />
     </c:if>
 
-    <c:set var="isAdmin" value="${loggedInUser != null && loggedInUser.isAdmin == 1}" />
-    
+    <c:set var="isAdmin" value="${sessionScope.loggedInUser != null && sessionScope.loggedInUser.isAdmin == 1}" />
+
     <c:if test="${isAdmin}">
-        <form action="adminProductAction" method="GET" style="margin-bottom: 20px;">
+        <form action="${pageContext.request.contextPath}/adminProductAction" method="GET" style="margin-bottom: 20px;">
             <input type="hidden" name="action" value="addForm">
             <button type="submit" class="add-btn">Thêm sản phẩm mới</button>
         </form>
     </c:if>
 
     <div class="product-grid">
-        <c:forEach var="product" items="${productList}">
+        <c:forEach var="product" items="${requestScope.productList}">
             <div class="card">
                 
                 <div>
@@ -59,20 +60,20 @@
                     
                     <h4>${product.name}</h4>
                     <p class="desc">Phân loại: ${product.category}</p>
-                    <p class="price">${String.format("%,.0f $", product.price)}</p>
+                    <p class="price"><fmt:formatNumber value="${product.price}" type="number" maxFractionDigits="0"/> $</p>
                 </div>
 
                 <div class="button-area">
                     <c:choose>
                         <c:when test="${isAdmin}">
                             <div class="btn-group">
-                                <form action="adminProductAction" method="GET" class="btn-form">
+                                <form action="${pageContext.request.contextPath}/adminProductAction" method="GET" class="btn-form">
                                     <input type="hidden" name="action" value="editForm">
                                     <input type="hidden" name="productId" value="${product.productID}">
                                     <button type="submit" class="admin-action-btn edit-btn">Sửa</button>
                                 </form>
                                 
-                                <form action="adminProductAction" method="POST" class="btn-form">
+                                <form action="${pageContext.request.contextPath}/adminProductAction" method="POST" class="btn-form">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="productId" value="${product.productID}">
                                     <button type="submit" class="admin-action-btn delete-btn">Xóa</button>
@@ -80,7 +81,7 @@
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <form action="addToCart" method="POST"> 
+                            <form action="${pageContext.request.contextPath}/addToCart" method="POST">
                                 <input type="hidden" name="productId" value="${product.productID}">
                                 <button type="submit" class="add-btn">ĐẶT MUA (Giỏ hàng)</button>
                             </form>

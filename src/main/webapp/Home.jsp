@@ -3,8 +3,7 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="entity.User" %>
-<%@ page import="jakarta.servlet.http.HttpSession" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -131,39 +130,25 @@
 </head>
 <body>
 
-<%
-    HttpSession currentSession = request.getSession(false);
-    entity.User loggedInUser = (currentSession != null) ? (entity.User) currentSession.getAttribute("loggedInUser") : null;
-%>
-
 <header class="header">
-    
     <div class="logo-area">
         <h1>Shoes Family</h1>
     </div>
-    
+
     <nav class="main-nav-controls">
         <a href="Home.jsp">Trang chủ</a>
-        <a href="<%= request.getContextPath() %>/products">Sản phẩm</a>
-        <a href="<%= request.getContextPath() %>/cart">Giỏ hàng (0)</a> 
-        
-        <% 
-            if (loggedInUser == null) {
-                // CHƯA ĐĂNG NHẬP: Hiển thị nút Đăng nhập
-                out.print("<a href='login.jsp' class='auth-btn'>ĐĂNG NHẬP</a>");
-            }
-        %>
+        <a href="${pageContext.request.contextPath}/products">Sản phẩm</a>
+        <a href="${pageContext.request.contextPath}/cart">Giỏ hàng (0)</a>
+        <c:if test="${empty sessionScope.loggedInUser}">
+            <a href="${pageContext.request.contextPath}/login" class="auth-btn">ĐĂNG NHẬP</a>
+        </c:if>
     </nav>
-    
-    <div class="user-dropdown-area <%= (loggedInUser == null) ? "hidden" : "" %>">
-        <% 
-            if (loggedInUser != null) {
-                // ĐÃ ĐĂNG NHẬP: Nhúng menu thả xuống
-                request.getRequestDispatcher("user_profile_dropdown.jsp").include(request, response);
-            }
-        %>
+
+    <div class="user-dropdown-area ${empty sessionScope.loggedInUser ? 'hidden' : ''}">
+        <c:if test="${not empty sessionScope.loggedInUser}">
+            <jsp:include page="user_profile_dropdown.jsp"/>
+        </c:if>
     </div>
-    
 </header>
 
 <div class="carousel">

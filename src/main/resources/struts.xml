@@ -2,42 +2,43 @@
   "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
   "https://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
+  <!-- Allow both .action and extension-less URLs -->
   <constant name="struts.devMode" value="false"/>
-  <constant name="struts.action.extension" value="action,,"/>
+  <constant name="struts.action.extension" value="action,"/>
 
   <package name="default" namespace="/" extends="struts-default">
+    <!-- Checkout -->
     <action name="checkout" class="actions.CheckoutAction" method="execute">
       <result name="input">/checkout.jsp</result>
       <result name="success">/order_confirmation.jsp</result>
     </action>
 
+    <!-- Authentication -->
     <action name="login" class="actions.LoginAction">
       <result name="input">/login.jsp</result>
-      <result name="success" type="redirect">Home.jsp</result>
+      <result name="success" type="redirect">/Home.jsp</result>
     </action>
-
     <action name="register" class="actions.RegisterAction">
       <result name="input">/register.jsp</result>
       <result name="success">/login.jsp</result>
     </action>
-
     <action name="logout" class="actions.LogoutAction">
-      <result name="success" type="redirect">Home.jsp</result>
+      <result name="success" type="redirect">/Home.jsp</result>
     </action>
 
+    <!-- Products & Cart -->
     <action name="products" class="actions.ProductAction">
       <result name="success">/product_list.jsp</result>
     </action>
-
     <action name="cart" class="actions.CartAction">
       <result name="success">/cart.jsp</result>
     </action>
-
     <action name="addToCart" class="actions.AddToCartAction">
       <result name="success" type="redirect">cart</result>
       <result name="error" type="redirect">products</result>
     </action>
 
+    <!-- Admin product management -->
     <action name="adminProductAction" class="actions.AdminProductAction">
       <result name="success" type="redirect">products</result>
       <result name="input">/product.jsp</result>
@@ -46,6 +47,7 @@
       <result name="error" type="redirect">products</result>
     </action>
 
+    <!-- Profile -->
     <action name="profile" class="actions.ProfileAction">
       <result name="success">/user_profile_form.jsp</result>
       <result name="login" type="redirect">login</result>
@@ -55,7 +57,5 @@
       <result name="input">/user_profile_form.jsp</result>
       <result name="login" type="redirect">login</result>
     </action>
-
   </package>
 </struts>
-

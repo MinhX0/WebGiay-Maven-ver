@@ -10,22 +10,25 @@ import java.util.Map;
 
 public class ProductAction extends ActionSupport {
     private final ProductDAO productDAO = new ProductDAO();
+    private List<Product> productList; // expose via getter if using Struts tags
 
     @Override
     public String execute() {
-        // Fetch products
-        List<Product> productList = productDAO.getAllProducts();
-        Map<String, Object> context = ActionContext.getContext().getContextMap();
-        Map<String, Object> request = (Map<String, Object>) context.get("request");
+        productList = productDAO.getAllProducts();
+        // Put into request map so JSTL can access as requestScope.productList
+        Map<String, Object> contextMap = ActionContext.getContext().getContextMap();
+        Map<String, Object> request = (Map<String, Object>) contextMap.get("request");
         if (request != null) {
             request.put("productList", productList);
-            Map<String,Object> session = ActionContext.getContext().getSession();
-            Object user = session.get("loggedInUser");
-            request.put("loggedInUser", user);
+            // Expose loggedInUser for admin checks
+            Map<String, Object> session = ActionContext.getContext().getSession();
+            request.put("loggedInUser", session.get("loggedInUser"));
         } else {
-            // Fallback: put in ActionContext so JSP can access via OGNL
+            // Fallback: still expose on the value stack
             ActionContext.getContext().put("productList", productList);
         }
         return SUCCESS;
     }
+
+    public List<Product> getProductList() { return productList; }
 }

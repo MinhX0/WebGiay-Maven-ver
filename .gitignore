@@ -1,75 +1,42 @@
-target/
+# Maven / Java build artifacts
+/target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-.kotlin
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-# Added broader IntelliJ exclusions
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/shelf/
-.idea/**/dictionaries
-.idea/**/httpRequests/
-.idea/**/dataSources/
-*.iws
+# IDE metadata
+/.idea/
 *.iml
-*.ipr
+/.classpath
+/.project
+/.settings/
+.nb-gradle/
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-
-### Logs & reports ###
-*.log
-logs/
-# JVM crash logs
-hs_err_pid*
-replay_pid*
-
-### OS / Editor junk ###
+# OS / misc
 .DS_Store
 Thumbs.db
-*.swp
-*.swo
-*~
 
-### Maven / Build artifacts ###
-# Already covered: target/
-# Additional sometimes-created artifacts
-dependency-reduced-pom.xml
-release.properties
+# Logs & temp
+*.log
+/logs/
+/tmp/
 
-### Environment / secrets (add if you externalize config later) ###
-.env
-.env.*
+# Local config & secrets
 *.local.properties
+*.env
 
-### Merge & patch backups ###
-*.orig
-*.rej
+# Generated archives
+*.war
+*.ear
 
-# END
+# Ignore duplicate legacy config directory if not needed
+/src/main/conf/
+
+# IntelliJ / NetBeans caches
+/out/
+/build/
+
+# Dependency downloads
+/.m2/
+
+# Prevent committing credentials accidentally
+**/context.xml
+

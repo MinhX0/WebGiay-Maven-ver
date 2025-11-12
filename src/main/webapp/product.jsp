@@ -26,7 +26,7 @@
     
     <c:set var="p" value="${requestScope.product}" />
     
-    <form action="adminProductAction" method="POST">
+    <form action="<%= request.getContextPath() %>/adminProductAction" method="POST">
         <input type="hidden" name="action" value="save">
         
         <c:if test="${p != null}">

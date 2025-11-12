@@ -102,8 +102,8 @@
     <%@ taglib prefix="s" uri="/struts-tags" %>
     <s:actionerror cssStyle="color:red; margin-bottom:15px;"/>
     <s:actionmessage cssStyle="color:green; margin-bottom:15px; font-weight:bold;"/>
-    <form action="<%= request.getContextPath() %>/register.action" method="POST">
-        
+    <form action="<%= request.getContextPath() %>/register" method="POST">
+
         <div class="form-group">
             <label for="new_username">Tên đăng nhập</label>
             <input type="text" id="new_username" name="username" required>

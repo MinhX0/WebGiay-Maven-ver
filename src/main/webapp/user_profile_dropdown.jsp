@@ -4,13 +4,7 @@
 --%>
 <%-- File: user_profile_dropdown.jsp --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="entity.User" %>
-
-<% 
-    // Lấy thông tin User từ session
-    User loggedInUser = (User) session.getAttribute("loggedInUser");
-    String username = (loggedInUser != null) ? loggedInUser.getUsername() : "Guest";
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
     /* CSS Chỉ áp dụng cho Dropdown này */
@@ -65,11 +59,11 @@
     }
 </style>
 
+<c:set var="username" value="${sessionScope.loggedInUser != null ? sessionScope.loggedInUser.username : 'Guest'}" />
 <div class="dropdown">
-    <button class="dropbtn">Xin chào, <%= username %></button>
+    <button class="dropbtn">Xin chào, ${username}</button>
     <div class="dropdown-content">
-        <a href="<%= request.getContextPath() %>/profile">Sửa thông tin</a>
-        
-        <a href="<%= request.getContextPath() %>/logout">Đăng xuất</a>
+        <a href="${pageContext.request.contextPath}/profile">Sửa thông tin</a>
+        <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
     </div>
 </div>

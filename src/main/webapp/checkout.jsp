@@ -97,7 +97,7 @@
 
                 <%@ taglib prefix="s" uri="/struts-tags" %>
                 <s:actionerror cssStyle="color:#f44336; font-weight:bold;"/>
-                <form action="<%= request.getContextPath() %>/checkout.action" method="POST">
+                <form action="<%= request.getContextPath() %>/checkout" method="POST">
 
                     <h3>Địa chỉ giao hàng</h3>
                     <input type="text" name="address" placeholder="Nhập địa chỉ cần ship đến" required>

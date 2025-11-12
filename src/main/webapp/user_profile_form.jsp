@@ -1,17 +1,10 @@
-<%-- File: user_profile_form.jsp (Dùng chung cho cả Admin và Khách hàng) --%>
+<%-- Modernize user_profile_form.jsp to JSTL/EL --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="entity.User" %>
-
-<% 
-    User user = (User) request.getAttribute("userProfile"); 
-    String statusMessage = (String) session.getAttribute("statusMessage");
-
-    if (user == null) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
-        return;
-    }
-%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- Expect 'userProfile' and optional 'statusMessage' in scopes --%>
+<c:if test="${userProfile == null}">
+  <c:redirect url="${pageContext.request.contextPath}/login.jsp"/>
+</c:if>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -31,42 +24,31 @@
     </style>
 </head>
 <body>
-
 <div class="profile-card">
     <h2>HỒ SƠ CÁ NHÂN</h2>
     <p style="color: gray; margin-bottom: 20px;">
-        Tài khoản: **<%= user.getUsername() %>** (<span class="role"><%= user.getIsAdmin() == 1 ? "ADMIN" : "Khách hàng" %></span>)
+        Tài khoản: **${userProfile.username}** (<span class="role">${userProfile.isAdmin == 1 ? 'ADMIN' : 'Khách hàng'}</span>)
     </p>
-    
-    <%-- Hiển thị thông báo trạng thái --%>
-    <% if(statusMessage != null) { 
-        session.removeAttribute("statusMessage");
-        out.print("<p style='color: green; font-weight: bold; margin-bottom: 15px;'>" + statusMessage + "</p>");
-    } %>
-
-    <form action="<%= request.getContextPath() %>/profile-save" method="POST">
-
+    <c:if test="${not empty sessionScope.statusMessage}">
+        <p style='color: green; font-weight: bold; margin-bottom: 15px;'>${sessionScope.statusMessage}</p>
+        <c:remove var="statusMessage" scope="session" />
+    </c:if>
+    <form action="${pageContext.request.contextPath}/profile-save" method="POST">
         <div class="form-group">
             <label for="username">Tên đăng nhập:</label>
-            <input type="text" id="username" name="username" value="<%= user.getUsername() %>" required>
+            <input type="text" id="username" name="username" value="${userProfile.username}" required>
         </div>
-
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="<%= user.getEmail() %>" required>
+            <input type="email" id="email" name="email" value="${userProfile.email}" required>
         </div>
-        
         <div class="form-group">
             <label for="newPassword">Mật khẩu mới (Để trống nếu không đổi):</label>
             <input type="password" id="newPassword" name="newPassword">
         </div>
-
         <button type="submit" class="submit-btn">Lưu Thay Đổi</button>
-        
     </form>
-    
     <a href="Home.jsp" class="back-link">Quay lại Trang chủ</a>
 </div>
-
 </body>
 </html>

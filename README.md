@@ -1,4 +1,4 @@
-# WebGiay
+# WebGay
 
 Migrated from a legacy Servlet/Ant project to Maven + Struts2 (Jakarta EE 10).
 

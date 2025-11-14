@@ -22,6 +22,4 @@
       <description>Keep a copy of the generated servlet class' java code.</description>
     </property>
   </jsp-config>
-  
-
 </glassfish-web-app>

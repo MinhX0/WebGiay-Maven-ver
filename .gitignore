@@ -1,42 +1,45 @@
-# Maven / Java build artifacts
+# Maven
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+.mvn/
 
-# IDE metadata
-/.idea/
+# IntelliJ / JetBrains
+.idea/
 *.iml
-/.classpath
-/.project
-/.settings/
-.nb-gradle/
+*.iws
+out/
 
-# OS / misc
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+/nbproject/private/
+/nb-configuration.xml
+/nbactions*.xml
+/build/
+/dist/
+
+# OS
 .DS_Store
 Thumbs.db
 
-# Logs & temp
+# Logs
 *.log
-/logs/
-/tmp/
 
-# Local config & secrets
+# Java
+*.class
+hs_err_pid*
+
+# VS Code
+.vscode/
+
+# Local environment files
 *.local.properties
 *.env
 
-# Generated archives
+# Generated
 *.war
 *.ear
-
-# Ignore duplicate legacy config directory if not needed
-/src/main/conf/
-
-# IntelliJ / NetBeans caches
-/out/
-/build/
-
-# Dependency downloads
-/.m2/
-
-# Prevent committing credentials accidentally
-**/context.xml
 
